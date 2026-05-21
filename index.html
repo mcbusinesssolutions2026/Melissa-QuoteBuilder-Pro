@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Melissa QuoteBuilder Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--s1:#111111;--s2:#1a1a1a;--s3:#222222;
+  --gold:#c9a84c;--gold2:#e8c97a;--gd:#c9a84c18;--gb:#c9a84c33;
+  --text:#f0ede6;--t2:#9a9080;--t3:#5a5448;--t4:#3a3028;
+  --green:#25d366;--r:10px;--rl:14px;
+}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+nav{position:sticky;top:0;z-index:100;background:#0a0a0aee;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid #ffffff08;padding:14px 2rem;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px}.logo span{color:var(--gold)}
+.nav-links{display:flex;gap:1.5rem}.nav-links a{color:var(--t3);font-size:13px;text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--text)}
+.lang{display:flex;background:var(--s2);border-radius:7px;overflow:hidden;border:1px solid #ffffff0a}
+.lang-btn{padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--t3);font-family:'DM Sans',sans-serif;transition:all .2s}
+.lang-btn.on{background:var(--gold);color:#000}
+.disc{background:var(--gd);border-bottom:1px solid var(--gb);padding:9px 2rem;font-size:12px;color:var(--t3);display:flex;gap:8px;align-items:center}
+.disc-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;flex-shrink:0}
+.hero{padding:5rem 2rem 4rem;max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr;gap:3rem;align-items:center;position:relative}
+.hero::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;border-radius:50%;border:1px solid #c9a84c0a;pointer-events:none}
+.hero::after{content:'';position:absolute;top:-50px;right:-50px;width:250px;height:250px;border-radius:50%;border:1px solid #c9a84c14;pointer-events:none}
+.hero-tag{display:inline-block;background:var(--gd);border:1px solid var(--gb);color:var(--gold);font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:1.25rem}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,7vw,88px);line-height:.9;margin-bottom:1.25rem}.hero h1 span{color:var(--gold)}
+.hero p{color:var(--t2);font-size:15px;line-height:1.7;margin-bottom:2rem;max-width:420px}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap}
+.hero-cards{display:flex;flex-direction:column;gap:10px}
+.hero-card{background:var(--s1);border:1px solid #ffffff08;border-radius:var(--rl);padding:1.1rem 1.25rem;display:flex;align-items:center;gap:14px;transition:border-color .2s}
+.hero-card:hover{border-color:var(--gb)}
+.hero-card-icon{width:42px;height:42px;background:var(--gd);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.hero-card-num{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--gold);line-height:1}
+.hero-card-label{font-size:12px;color:var(--t3);margin-top:2px}
+.btn{padding:11px 24px;border-radius:var(--r);border:none;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;text-decoration:none}
+.btn-gold{background:var(--gold);color:#000}.btn-gold:hover{background:var(--gold2);transform:translateY(-1px)}
+.btn-out{background:transparent;border:1px solid #ffffff14;color:var(--t2)}.btn-out:hover{border-color:var(--t2);color:var(--text)}
+.btn-wa{background:#25d36616;color:var(--green);border:1px solid #25d36628}.btn-wa:hover{background:#25d36624}
+.btn-sm{padding:9px 18px;font-size:13px}
+hr.div{border:none;border-top:1px solid #ffffff07}
+.section{max-width:1000px;margin:0 auto;padding:3.5rem 2rem}
+.sec-tag{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,4vw,44px);margin-bottom:.5rem;line-height:1.05}
+.sec-sub{font-size:14px;color:var(--t2);margin-bottom:2rem;line-height:1.6}
+.calc-wrap{background:var(--s1);border:1px solid #ffffff08;border-radius:var(--rl);overflow:hidden}
+.pricebar{background:var(--s2);border-bottom:1px solid var(--gb);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.pb-label{font-size:11px;color:var(--t4);text-transform:uppercase;letter-spacing:1px}
+.pb-note{font-size:11px;color:var(--t4);margin-top:2px}
+.live-price{display:flex;align-items:center;gap:10px}
+.lp-tag{font-size:11px;color:var(--t3)}
+.lp-basic{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--text);transition:all .3s}
+.lp-prem{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--gold);transition:all .3s}
+.lp-sep{color:var(--t4);font-size:18px}
+.qs{padding:1.5rem}
+.qblock{margin-bottom:2.5rem}
+.ql{font-size:15px;font-weight:500;margin-bottom:.3rem}
+.qh{font-size:12px;color:var(--t3);margin-bottom:1rem}
+.vgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.vgrid.three{grid-template-columns:repeat(3,1fr)}
+.vopt{background:var(--s2);border:2px solid #ffffff07;border-radius:var(--rl);padding:1rem 8px;cursor:pointer;text-align:center;transition:all .2s;position:relative}
+.vopt:hover{border-color:var(--gb);transform:translateY(-2px)}
+.vopt.on{border-color:var(--gold);background:#c9a84c0b}
+.vopt-ico{font-size:30px;margin-bottom:8px;display:block}
+.vopt-n{font-size:13px;font-weight:500}
+.vopt-s{font-size:11px;color:var(--t3);margin-top:3px}
+.vopt.on .vopt-s{color:var(--gold)}
+.vchk{position:absolute;top:7px;right:7px;width:17px;height:17px;background:var(--gold);border-radius:50%;display:none;align-items:center;justify-content:center;font-size:9px;color:#000;font-weight:700}
+.vopt.on .vchk{display:flex}
+.rng-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.rng-big{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--gold)}
+.rng-unit{font-size:13px;color:var(--t3)}
+input[type=range]{width:100%;-webkit-appearance:none;height:4px;border-radius:2px;background:var(--s3);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--gold);border:3px solid var(--bg);cursor:pointer}
+.rng-mm{display:flex;justify-content:space-between;font-size:10px;color:var(--t4);margin-top:5px}
+.addon-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.addon{display:flex;align-items:center;gap:10px;background:var(--s2);border:2px solid #ffffff07;border-radius:var(--r);padding:11px 13px;cursor:pointer;transition:all .2s}
+.addon:hover{border-color:var(--gb)}
+.addon.on{border-color:var(--gold);background:#c9a84c09}
+.addon-cb{width:19px;height:19px;border-radius:5px;border:2px solid var(--t4);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;transition:all .2s;color:#000}
+.addon.on .addon-cb{background:var(--gold);border-color:var(--gold)}
+.addon-n{font-size:13px;font-weight:500}
+.addon-p{font-size:11px;color:var(--t3);margin-top:1px}
+.addon.on .addon-p{color:var(--gold)}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.fgroup label{font-size:12px;color:var(--t3);display:block;margin-bottom:4px}
+.finput{width:100%;background:var(--s2);border:1px solid #ffffff0a;border-radius:var(--r);padding:10px 13px;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border .2s}
+.finput:focus{border-color:var(--gb)}
+textarea.finput{resize:none}
+.action-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:1rem}
+.result-box{background:linear-gradient(135deg,var(--gd),transparent);border:1px solid var(--gb);border-radius:var(--rl);padding:2rem;margin:0 1.5rem 1.5rem;text-align:center;display:none;animation:fadeUp .4s ease}
+.result-box.show{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.res-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:1rem}
+.res-nums{display:flex;justify-content:center;align-items:center;gap:2rem;flex-wrap:wrap;margin-bottom:1rem}
+.res-col{text-align:center}
+.res-badge{font-size:10px;font-weight:600;padding:3px 10px;border-radius:100px;margin-bottom:6px;display:inline-block}
+.badge-b{background:#ffffff10;color:var(--t2)}
+.badge-p{background:var(--gd);color:var(--gold);border:1px solid var(--gb)}
+.res-num{font-family:'Bebas Neue',sans-serif;font-size:44px;line-height:1}
+.res-note{font-size:12px;color:var(--t3);margin-top:.75rem}
+.bk-table{width:calc(100% - 3rem);margin:0 1.5rem 1.5rem;border-collapse:collapse}
+.bk-table th{font-size:10px;color:var(--t4);text-transform:uppercase;letter-spacing:1px;padding:7px 10px;text-align:left;border-bottom:1px solid #ffffff08}
+.bk-table td{padding:10px;font-size:13px;border-bottom:1px solid #ffffff05}
+.bk-table tr:last-child td{border-bottom:none;font-weight:600;font-size:14px}
+.bk-table .gold{color:var(--gold);text-align:right}
+.bk-table .right{text-align:right}
+.res-actions{padding:1rem 1.5rem;border-top:1px solid #ffffff08;display:flex;gap:8px;flex-wrap:wrap}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.pc{background:var(--s1);border:1px solid #ffffff08;border-radius:var(--rl);padding:1.5rem;transition:border-color .2s}
+.pc:hover{border-color:var(--gb)}
+.pc.feat{border-color:var(--gb);background:#c9a84c06}
+.pc-ico{font-size:26px;margin-bottom:.75rem}
+.pc-name{font-size:15px;font-weight:600;margin-bottom:.35rem}
+.pc-desc{font-size:12px;color:var(--t2);line-height:1.5;margin-bottom:.75rem}
+.pc-price{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--gold)}
+.pc-note{font-size:11px;color:var(--t3);margin-bottom:.75rem}
+.pc-features{list-style:none;display:flex;flex-direction:column;gap:5px}
+.pc-features li{font-size:12px;color:var(--t2);display:flex;align-items:center;gap:6px}
+.pc-features li::before{content:'✓';color:var(--gold);font-size:11px;font-weight:700;flex-shrink:0}
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.svc{background:var(--s1);border:1px solid #ffffff08;border-radius:var(--rl);padding:1.5rem;transition:border-color .2s}
+.svc:hover{border-color:var(--gb)}
+.svc-ico{font-size:26px;margin-bottom:.75rem}
+.svc-name{font-size:14px;font-weight:600;margin-bottom:.35rem}
+.svc-desc{font-size:12px;color:var(--t2);line-height:1.6}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tcard{background:var(--s1);border:1px solid #ffffff08;border-radius:var(--rl);padding:1.5rem}
+.tcard-stars{color:var(--gold);font-size:13px;letter-spacing:2px;margin-bottom:.75rem}
+.tcard-text{font-size:13px;color:var(--t2);font-style:italic;line-height:1.6;margin-bottom:.75rem}
+.tcard-name{font-size:13px;font-weight:600}
+.tcard-loc{font-size:11px;color:var(--t4)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.ci-list{display:flex;flex-direction:column;gap:1rem;margin-bottom:1.5rem}
+.ci-item{display:flex;align-items:flex-start;gap:12px}
+.ci-icon{width:38px;height:38px;background:var(--gd);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.ci-label{font-size:11px;color:var(--t4);margin-bottom:2px}
+.ci-val{font-size:14px;font-weight:500}
+.map-wrap{border-radius:var(--rl);overflow:hidden;height:400px;border:1px solid #ffffff08}
+.map-wrap iframe{width:100%;height:100%;border:none;filter:invert(.92) hue-rotate(180deg) saturate(.8)}
+footer{border-top:1px solid #ffffff08;padding:2rem;text-align:center;font-size:12px;color:var(--t4)}
+footer span{color:var(--gold)}
+@media(max-width:700px){
+  .hero{grid-template-columns:1fr;padding:3rem 1rem 2rem}.hero-cards{display:none}
+  .contact-grid,.fields,.pricing-grid,.svc-grid,.testi-grid,.addon-grid{grid-template-columns:1fr}
+  .vgrid{grid-template-columns:repeat(2,1fr)}.vgrid.three{grid-template-columns:repeat(3,1fr)}
+  .section{padding:2.5rem 1rem}
+  nav{padding:12px 1rem}.nav-links{display:none}
+  .bk-table{width:calc(100% - 2rem);margin:0 1rem 1rem}
+  .result-box{margin:0 1rem 1rem}
+  .res-actions{padding:1rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Melissa <span>QuoteBuilder</span> Pro</div>
+  <div class="nav-links">
+    <a href="#calc" id="nl1">Calculator</a>
+    <a href="#pricing" id="nl2">Pricing</a>
+    <a href="#services" id="nl3">Services</a>
+    <a href="#contact" id="nl4">Contact</a>
+  </div>
+  <div class="lang">
+    <button class="lang-btn on" onclick="setLang('en')" id="btn-en">EN</button>
+    <button class="lang-btn" onclick="setLang('es')" id="btn-es">ES</button>
+  </div>
+</nav>
+
+<div class="disc"><div class="disc-dot"></div><span id="disc-text">⚠️ Learning/portfolio project only — not a real business. All prices are for demonstration purposes.</span></div>
+
+<div class="hero">
+  <div>
+    <div class="hero-tag" id="hero-tag">Roofing Estimate Calculator</div>
+    <h1 id="hero-h1">GET YOUR<br/><span>ROOF QUOTE</span><br/>IN MINUTES</h1>
+    <p id="hero-p">Answer a few quick questions, see prices update in real time, and get a full detailed estimate instantly.</p>
+    <div class="hero-btns">
+      <a href="#calc"><button class="btn btn-gold" id="hero-cta">Get Free Estimate</button></a>
+      <a href="#pricing"><button class="btn btn-out" id="hero-cta2">See Pricing</button></a>
+    </div>
+  </div>
+  <div class="hero-cards">
+    <div class="hero-card"><div class="hero-card-icon">🏠</div><div><div class="hero-card-num">150+</div><div class="hero-card-label" id="hc1">Roofs Completed</div></div></div>
+    <div class="hero-card"><div class="hero-card-icon">⭐</div><div><div class="hero-card-num">98%</div><div class="hero-card-label" id="hc2">Client Satisfaction</div></div></div>
+    <div class="hero-card"><div class="hero-card-icon">🔨</div><div><div class="hero-card-num">12 yrs</div><div class="hero-card-label" id="hc3">Experience</div></div></div>
+  </div>
+</div>
+
+<hr class="div"/>
+
+<div class="section" id="calc">
+  <div class="sec-tag" id="calc-tag">Free Estimate Tool</div>
+  <div class="sec-title" id="calc-title">INSTANT QUOTE CALCULATOR</div>
+  <div class="sec-sub" id="calc-sub">Prices update live as you fill out each section</div>
+  <div class="calc-wrap">
+    <div class="pricebar">
+      <div><div class="pb-label" id="pb-label">Live Estimate</div><div class="pb-note" id="pb-note">Updates as you select</div></div>
+      <div class="live-price">
+        <span class="lp-tag" id="lp-tag1">Basic</span>
+        <span class="lp-basic" id="live-b">$0</span>
+        <span class="lp-sep">·</span>
+        <span class="lp-tag" id="lp-tag2">Premium</span>
+        <span class="lp-prem" id="live-p">$0</span>
+      </div>
+    </div>
+    <div class="qs">
+      <div class="qblock">
+        <div class="ql" id="q1l">1. What type of roof do you have?</div>
+        <div class="qh" id="q1h">Tap to select — affects the complexity factor</div>
+        <div class="vgrid">
+          <div class="vopt" onclick="pick(this,'rf',1.0)"><div class="vchk">✓</div><span class="vopt-ico">🏠</span><div class="vopt-n" id="rt1">Gable</div><div class="vopt-s">Standard · ×1.0</div></div>
+          <div class="vopt" onclick="pick(this,'rf',1.25)"><div class="vchk">✓</div><span class="vopt-ico">⛺</span><div class="vopt-n" id="rt2">Hip Roof</div><div class="vopt-s">Complex · ×1.25</div></div>
+          <div class="vopt" onclick="pick(this,'rf',0.9)"><div class="vchk">✓</div><span class="vopt-ico">🏢</span><div class="vopt-n" id="rt3">Flat</div><div class="vopt-s">Commercial · ×0.9</div></div>
+          <div class="vopt" onclick="pick(this,'rf',0.75)"><div class="vchk">✓</div><span class="vopt-ico">🛖</span><div class="vopt-n" id="rt4">Shed</div><div class="vopt-s">Simple · ×0.75</div></div>
+        </div>
+      </div>
+      <div class="qblock">
+        <div class="ql" id="q2l">2. What is the size of your roof?</div>
+        <div class="qh" id="q2h">Drag the slider — price updates instantly</div>
+        <div class="rng-top"><span class="rng-big" id="sqft-val">1,500</span><span class="rng-unit" id="sqft-unit">sq ft</span></div>
+        <input type="range" min="500" max="5000" step="50" value="1500" id="sqft" oninput="usqft(this.value)"/>
+        <div class="rng-mm"><span>500</span><span>5,000</span></div>
+      </div>
+      <div class="qblock">
+        <div class="ql" id="q3l">3. Current condition of your roof?</div>
+        <div class="qh" id="q3h">This determines how much labor is needed</div>
+        <div class="vgrid three">
+          <div class="vopt" onclick="pick(this,'cf',1.0)"><div class="vchk">✓</div><span class="vopt-ico">✅</span><div class="vopt-n" id="c1">Good</div><div class="vopt-s">Minor repairs · ×1.0</div></div>
+          <div class="vopt" onclick="pick(this,'cf',1.3)"><div class="vchk">✓</div><span class="vopt-ico">⚠️</span><div class="vopt-n" id="c2">Fair</div><div class="vopt-s">Some damage · ×1.3</div></div>
+          <div class="vopt" onclick="pick(this,'cf',1.6)"><div class="vchk">✓</div><span class="vopt-ico">🔴</span><div class="vopt-n" id="c3">Poor</div><div class="vopt-s">Full replacement · ×1.6</div></div>
+        </div>
+      </div>
+      <div class="qblock">
+        <div class="ql" id="q4l">4. Additional services (optional)</div>
+        <div class="qh" id="q4h">Select all that apply — added to total instantly</div>
+        <div class="addon-grid">
+          <div class="addon" onclick="tadd(this,800,1500)"><div class="addon-cb">✓</div><div><div class="addon-n" id="a1">Gutter Installation</div><div class="addon-p">+$800–$1,500</div></div></div>
+          <div class="addon" onclick="tadd(this,600,1200)"><div class="addon-cb">✓</div><div><div class="addon-n" id="a2">Insulation Upgrade</div><div class="addon-p">+$600–$1,200</div></div></div>
+          <div class="addon" onclick="tadd(this,1000,2000)"><div class="addon-cb">✓</div><div><div class="addon-n" id="a3">Skylight Installation</div><div class="addon-p">+$1,000–$2,000</div></div></div>
+          <div class="addon" onclick="tadd(this,400,900)"><div class="addon-cb">✓</div><div><div class="addon-n" id="a4">Ventilation System</div><div class="addon-p">+$400–$900</div></div></div>
+          <div class="addon" onclick="tadd(this,300,500)"><div class="addon-cb">✓</div><div><div class="addon-n" id="a5">Extended Warranty</div><div class="addon-p">+$300–$500</div></div></div>
+          <div class="addon" onclick="tadd(this,150,300)"><div class="addon-cb">✓</div><div><div class="addon-n" id="a6">Inspection Report</div><div class="addon-p">+$150–$300</div></div></div>
+        </div>
+      </div>
+      <div class="qblock">
+        <div class="ql" id="q5l">5. Your contact info</div>
+        <div class="qh" id="q5h">To send you the detailed quote</div>
+        <div class="fields">
+          <div class="fgroup"><label id="fl1">Full Name</label><input class="finput" id="cn" type="text" placeholder="John Smith"/></div>
+          <div class="fgroup"><label id="fl2">Phone / WhatsApp</label><input class="finput" id="cp" type="tel" placeholder="+1 (555) 000-0000"/></div>
+          <div class="fgroup"><label id="fl3">Property Address</label><input class="finput" id="ca" type="text" placeholder="Houston, TX"/></div>
+          <div class="fgroup"><label id="fl4">Email</label><input class="finput" id="ce" type="email" placeholder="you@email.com"/></div>
+        </div>
+        <div class="fgroup"><label id="fl5">Additional Notes</label><textarea class="finput" id="cn2" rows="2" placeholder="Any details about your project..."></textarea></div>
+        <div class="action-row">
+          <button class="btn btn-gold" onclick="showResult()" id="get-btn">🔥 Get My Full Quote</button>
+        </div>
+      </div>
+    </div>
+    <div class="result-box" id="result-box">
+      <div class="res-tag" id="res-tag">Your Estimate is Ready</div>
+      <div class="res-nums">
+        <div class="res-col"><span class="res-badge badge-b">BASIC</span><div class="res-num" id="res-b">$0</div></div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--t4);align-self:flex-end;padding-bottom:4px">VS</div>
+        <div class="res-col"><span class="res-badge badge-p">PREMIUM</span><div class="res-num" id="res-p" style="color:var(--gold)">$0</div></div>
+      </div>
+      <div class="res-note" id="res-note">Estimated range. Final price confirmed after on-site inspection.</div>
+    </div>
+    <table class="bk-table" id="bk-table" style="display:none">
+      <thead><tr><th id="bk-h1">Item</th><th class="right" id="bk-h2">Basic</th><th class="right gold" id="bk-h3">Premium</th></tr></thead>
+      <tbody id="bk-body"></tbody>
+    </table>
+    <div class="res-actions" id="res-actions" style="display:none">
+      <button class="btn btn-gold btn-sm" onclick="sendEmail()" id="email-btn">✉️ Send via Email</button>
+      <button class="btn btn-wa btn-sm" onclick="sendWA()" id="wa-btn">📱 Send via WhatsApp</button>
+      <button class="btn btn-out btn-sm" onclick="resetCalc()" id="reset-btn">↩ Start Over</button>
+    </div>
+  </div>
+</div>
+
+<hr class="div"/>
+
+<div class="section" id="pricing">
+  <div class="sec-tag" id="price-tag">Transparent Pricing</div>
+  <div class="sec-title" id="price-title">FIXED SERVICE RATES</div>
+  <div class="sec-sub" id="price-sub">No surprises. Standard rates before your custom quote.</div>
+  <div class="pricing-grid">
+    <div class="pc feat">
+      <div class="pc-ico">🔍</div>
+      <div class="pc-name" id="pc1n">Roof Inspection</div>
+      <div class="pc-desc" id="pc1d">Full visual inspection with written report and photo documentation.</div>
+      <div class="pc-price">$150–$300</div>
+      <div class="pc-note" id="pc1note">Applied to project if hired</div>
+      <ul class="pc-features"><li id="pc1f1">Full written report</li><li id="pc1f2">Photo documentation</li><li id="pc1f3">Repair recommendations</li><li id="pc1f4">Same-week scheduling</li></ul>
+    </div>
+    <div class="pc">
+      <div class="pc-ico">🔧</div>
+      <div class="pc-name" id="pc2n">Minor Repairs</div>
+      <div class="pc-desc" id="pc2d">Patch leaks, replace shingles, fix flashing and small structural issues.</div>
+      <div class="pc-price">$500–$800</div>
+      <div class="pc-note" id="pc2note">Per visit · Materials included</div>
+      <ul class="pc-features"><li id="pc2f1">Leak patching</li><li id="pc2f2">Shingle replacement</li><li id="pc2f3">Flashing repair</li><li id="pc2f4">90-day warranty</li></ul>
+    </div>
+    <div class="pc">
+      <div class="pc-ico">🏗️</div>
+      <div class="pc-name" id="pc3n">Partial Replacement</div>
+      <div class="pc-desc" id="pc3d">Replace a section with matching materials. Ideal for storm damage.</div>
+      <div class="pc-price">$3k–$8k</div>
+      <div class="pc-note" id="pc3note">Depends on area size</div>
+      <ul class="pc-features"><li id="pc3f1">Material matching</li><li id="pc3f2">Underlayment included</li><li id="pc3f3">Insurance support</li><li id="pc3f4">2-year warranty</li></ul>
+    </div>
+  </div>
+</div>
+
+<hr class="div"/>
+
+<div class="section" id="services">
+  <div class="sec-tag" id="svc-tag">What We Do</div>
+  <div class="sec-title" id="svc-title">OUR ROOFING SERVICES</div>
+  <div class="sec-sub" id="svc-sub">Professional solutions for residential and commercial properties across Texas</div>
+  <div class="svc-grid">
+    <div class="svc"><div class="svc-ico">🏠</div><div class="svc-name" id="sv1">Full Replacement</div><div class="svc-desc" id="sv1d">Complete tear-off and new installation with premium materials and full warranty.</div></div>
+    <div class="svc"><div class="svc-ico">🔧</div><div class="svc-name" id="sv2">Repairs</div><div class="svc-desc" id="sv2d">Fix leaks, damaged shingles, flashing issues — fast turnaround guaranteed.</div></div>
+    <div class="svc"><div class="svc-ico">🌧️</div><div class="svc-name" id="sv3">Waterproofing</div><div class="svc-desc" id="sv3d">Advanced membranes and coatings to permanently protect your property.</div></div>
+    <div class="svc"><div class="svc-ico">🔍</div><div class="svc-name" id="sv4">Inspections</div><div class="svc-desc" id="sv4d">Detailed reports with photos, recommendations and priority assessment.</div></div>
+  </div>
+</div>
+
+<hr class="div"/>
+
+<div class="section">
+  <div class="sec-tag" id="testi-tag">Client Reviews</div>
+  <div class="sec-title" id="testi-title">WHAT CLIENTS SAY</div>
+  <div class="testi-grid">
+    <div class="tcard"><div class="tcard-stars">★★★★★</div><div class="tcard-text" id="t1">"The quote calculator was spot-on. Fast crew and zero surprise charges at the end."</div><div class="tcard-name">Robert M.</div><div class="tcard-loc">Houston, TX</div></div>
+    <div class="tcard"><div class="tcard-stars">★★★★★</div><div class="tcard-text" id="t2">"Full roof replacement in 2 days. Clean work site and perfect shingle match."</div><div class="tcard-name">Sandra L.</div><div class="tcard-loc">Dallas, TX</div></div>
+    <div class="tcard"><div class="tcard-stars">★★★★★</div><div class="tcard-text" id="t3">"Most transparent contractor I've worked with. Online estimate was very close to the final price."</div><div class="tcard-name">Carlos V.</div><div class="tcard-loc">Austin, TX</div></div>
+  </div>
+</div>
+
+<hr class="div"/>
+
+<div class="section" id="contact">
+  <div class="sec-tag" id="contact-tag">Get In Touch</div>
+  <div class="sec-title" id="contact-title">CONTACT US</div>
+  <div class="sec-sub" id="contact-sub">Ready to get started? Send us a message or call directly.</div>
+  <div class="contact-grid">
+    <div>
+      <div class="ci-list">
+        <div class="ci-item"><div class="ci-icon">📞</div><div><div class="ci-label" id="ci1l">Phone</div><div class="ci-val">(555) 012-3456</div></div></div>
+        <div class="ci-item"><div class="ci-icon">📧</div><div><div class="ci-label" id="ci2l">Email</div><div class="ci-val">info@melissaqbpro.com</div></div></div>
+        <div class="ci-item"><div class="ci-icon">📍</div><div><div class="ci-label" id="ci3l">Coverage Area</div><div class="ci-val">Houston · Dallas · Austin, TX</div></div></div>
+        <div class="ci-item"><div class="ci-icon">🕐</div><div><div class="ci-label" id="ci4l">Hours</div><div class="ci-val">Mon–Sat · 7am – 6pm</div></div></div>
+      </div>
+      <div class="fields">
+        <div class="fgroup"><label id="cf1">Your Name</label><input class="finput" id="cf-name" type="text" placeholder="John Smith"/></div>
+        <div class="fgroup"><label id="cf2">Your Phone</label><input class="finput" id="cf-phone" type="tel" placeholder="+1 (555) 000-0000"/></div>
+      </div>
+      <div class="fgroup" style="margin-bottom:10px"><label id="cf3">Message</label><textarea class="finput" id="cf-msg" rows="3" placeholder="Tell us about your roofing project..."></textarea></div>
+      <div class="action-row">
+        <button class="btn btn-gold btn-sm" onclick="sendContactEmail()" id="cf-email-btn">✉️ Send Email</button>
+        <button class="btn btn-wa btn-sm" onclick="sendContactWA()" id="cf-wa-btn">📱 WhatsApp</button>
+      </div>
+    </div>
+    <div class="map-wrap">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d887135.4765735673!2d-96.66494!3d29.8174!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640b8b4488d8501%3A0xca0d02def365053b!2sHouston%2C%20TX!5e0!3m2!1sen!2sus!4v1716000000000" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 <span>Melissa QuoteBuilder Pro</span> · Built as a learning & portfolio project · Not a real business · Prices for demo only</p>
+</footer>
+
+<script>
+const S={rf:1,cf:1,sqft:1500,ao:[]};
+let lang='en';
+function calc(){
+  const b=Math.round((S.sqft*2.5+S.sqft*3.8)*S.rf*S.cf+S.ao.reduce((a,x)=>a+x.b,0));
+  const p=Math.round((S.sqft*4.2+S.sqft*7.5)*S.rf*S.cf+S.ao.reduce((a,x)=>a+x.p,0));
+  const lb=Math.round(S.sqft*2.5*S.rf*S.cf),lp=Math.round(S.sqft*4.2*S.rf*S.cf);
+  const mb=Math.round(S.sqft*3.8*S.rf*S.cf),mp=Math.round(S.sqft*7.5*S.rf*S.cf);
+  const aob=S.ao.reduce((a,x)=>a+x.b,0),aop=S.ao.reduce((a,x)=>a+x.p,0);
+  return{b,p,lb,lp,mb,mp,aob,aop};
+}
+function upd(){const r=calc();document.getElementById('live-b').textContent='$'+r.b.toLocaleString();document.getElementById('live-p').textContent='$'+r.p.toLocaleString();}
+function pick(el,k,v){el.closest('.vgrid').querySelectorAll('.vopt').forEach(e=>e.classList.remove('on'));el.classList.add('on');S[k]=v;upd();}
+function usqft(v){S.sqft=parseInt(v);document.getElementById('sqft-val').textContent=Number(v).toLocaleString();upd();}
+function tadd(el,b,p){el.classList.toggle('on');if(el.classList.contains('on'))S.ao.push({b,p,el});else S.ao=S.ao.filter(a=>a.el!==el);upd();}
+function showResult(){
+  const r=calc();
+  document.getElementById('res-b').textContent='$'+r.b.toLocaleString();
+  document.getElementById('res-p').textContent='$'+r.p.toLocaleString();
+  const t=T[lang];
+  const rows=[[t.bkr[0],r.lb,r.lp],[t.bkr[1],r.mb,r.mp],[t.bkr[2],r.aob>0?r.aob:null,r.aop>0?r.aop:null],[t.bkr[3],r.b,r.p]];
+  document.getElementById('bk-body').innerHTML=rows.map((row,i)=>`<tr${i===3?' style="font-weight:600"':''}><td>${row[0]}</td><td class="right">${row[1]!=null?'$'+row[1].toLocaleString():'—'}</td><td class="right gold">${row[2]!=null?'$'+row[2].toLocaleString():'—'}</td></tr>`).join('');
+  document.getElementById('result-box').classList.add('show');
+  document.getElementById('bk-table').style.display='table';
+  document.getElementById('res-actions').style.display='flex';
+  document.getElementById('result-box').scrollIntoView({behavior:'smooth'});
+  window._r=r;
+}
+function sendEmail(){
+  const r=window._r||calc();
+  const n=document.getElementById('cn').value||'Client';
+  const ph=document.getElementById('cp').value||'N/A';
+  const a=document.getElementById('ca').value||'N/A';
+  const notes=document.getElementById('cn2').value||'';
+  const sub=encodeURIComponent('Roofing Quote Request — Melissa QuoteBuilder Pro');
+  const body=encodeURIComponent(`Hello,\n\nI used the online quote calculator and would like a formal estimate.\n\nName: ${n}\nPhone: ${ph}\nAddress: ${a}\nNotes: ${notes}\n\nRoof factor: ×${S.rf} | Size: ${S.sqft} sq ft | Condition: ×${S.cf}\n\nCalculator estimate:\nBasic: $${r.b.toLocaleString()}\nPremium: $${r.p.toLocaleString()}\n\nPlease contact me to schedule an inspection.\n\nThank you!`);
+  window.location.href=`mailto:info@melissaqbpro.com?subject=${sub}&body=${body}`;
+}
+function sendWA(){
+  const r=window._r||calc();
+  const n=document.getElementById('cn').value||'Client';
+  const ph=document.getElementById('cp').value||'N/A';
+  const a=document.getElementById('ca').value||'N/A';
+  const msg=`Hi! I'm ${n} (📞 ${ph}).\nAddress: ${a}\nRoof: ×${S.rf} · ${S.sqft} sqft · condition ×${S.cf}\nEstimate: Basic $${r.b.toLocaleString()} · Premium $${r.p.toLocaleString()}\nPlease contact me to schedule an inspection!`;
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+function resetCalc(){
+  S.rf=1;S.cf=1;S.sqft=1500;S.ao=[];
+  document.querySelectorAll('.vopt,.addon').forEach(e=>e.classList.remove('on'));
+  document.getElementById('sqft').value=1500;document.getElementById('sqft-val').textContent='1,500';
+  document.getElementById('result-box').classList.remove('show');
+  document.getElementById('bk-table').style.display='none';
+  document.getElementById('res-actions').style.display='none';
+  upd();document.getElementById('calc').scrollIntoView({behavior:'smooth'});
+}
+function sendContactEmail(){
+  const n=document.getElementById('cf-name').value||'';
+  const ph=document.getElementById('cf-phone').value||'';
+  const m=document.getElementById('cf-msg').value||'';
+  window.location.href=`mailto:info@melissaqbpro.com?subject=${encodeURIComponent('Contact from Website')}&body=${encodeURIComponent(`Name: ${n}\nPhone: ${ph}\n\n${m}`)}`;
+}
+function sendContactWA(){
+  const n=document.getElementById('cf-name').value||'';
+  const ph=document.getElementById('cf-phone').value||'';
+  const m=document.getElementById('cf-msg').value||'';
+  window.open('https://wa.me/?text='+encodeURIComponent(`Hi! My name is ${n}, phone: ${ph}.\n\n${m}`),'_blank');
+}
+const T={
+  en:{bkr:['Base Labor','Materials','Add-ons','TOTAL'],
+    ids:{disc:'⚠️ Learning/portfolio project only — not a real business. All prices are for demo purposes.',
+    'hero-tag':'Roofing Estimate Calculator','hero-h1':'GET YOUR<br/><span>ROOF QUOTE</span><br/>IN MINUTES',
+    'hero-p':'Answer a few quick questions, see prices update in real time, and get a full detailed estimate instantly.',
+    'hero-cta':'Get Free Estimate','hero-cta2':'See Pricing',
+    hc1:'Roofs Completed',hc2:'Client Satisfaction',hc3:'Experience',
+    'calc-tag':'Free Estimate Tool','calc-title':'INSTANT QUOTE CALCULATOR','calc-sub':'Prices update live as you fill out each section',
+    'pb-label':'Live Estimate','pb-note':'Updates as you select','lp-tag1':'Basic','lp-tag2':'Premium',
+    q1l:'1. What type of roof do you have?',q1h:'Tap to select — affects the complexity factor',
+    rt1:'Gable',rt2:'Hip Roof',rt3:'Flat',rt4:'Shed',
+    q2l:'2. What is the size of your roof?',q2h:'Drag the slider — price updates instantly','sqft-unit':'sq ft',
+    q3l:'3. Current condition of your roof?',q3h:'This determines how much labor is needed',
+    c1:'Good',c2:'Fair',c3:'Poor',
+    q4l:'4. Additional services (optional)',q4h:'Select all that apply — added to total instantly',
+    a1:'Gutter Installation',a2:'Insulation Upgrade',a3:'Skylight Installation',a4:'Ventilation System',a5:'Extended Warranty',a6:'Inspection Report',
+    q5l:'5. Your contact info',q5h:'To send you the detailed quote',
+    fl1:'Full Name',fl2:'Phone / WhatsApp',fl3:'Property Address',fl4:'Email',fl5:'Additional Notes',
+    'get-btn':'🔥 Get My Full Quote','res-tag':'Your Estimate is Ready',
+    'res-note':'Estimated range. Final price confirmed after on-site inspection.',
+    'bk-h1':'Item','bk-h2':'Basic','bk-h3':'Premium',
+    'email-btn':'✉️ Send via Email','wa-btn':'📱 Send via WhatsApp','reset-btn':'↩ Start Over',
+    'price-tag':'Transparent Pricing','price-title':'FIXED SERVICE RATES','price-sub':'No surprises. Standard rates before your custom quote.',
+    pc1n:'Roof Inspection',pc1d:'Full visual inspection with written report and photo documentation.',pc1note:'Applied to project if hired',
+    pc1f1:'Full written report',pc1f2:'Photo documentation',pc1f3:'Repair recommendations',pc1f4:'Same-week scheduling',
+    pc2n:'Minor Repairs',pc2d:'Patch leaks, replace shingles, fix flashing and small structural issues.',pc2note:'Per visit · Materials included',
+    pc2f1:'Leak patching',pc2f2:'Shingle replacement',pc2f3:'Flashing repair',pc2f4:'90-day warranty',
+    pc3n:'Partial Replacement',pc3d:'Replace a section with matching materials. Ideal for storm damage.',pc3note:'Depends on area size',
+    pc3f1:'Material matching',pc3f2:'Underlayment included',pc3f3:'Insurance support',pc3f4:'2-year warranty',
+    'svc-tag':'What We Do','svc-title':'OUR ROOFING SERVICES','svc-sub':'Professional solutions for residential and commercial properties across Texas',
+    sv1:'Full Replacement',sv1d:'Complete tear-off and new installation with premium materials and full warranty.',
+    sv2:'Repairs',sv2d:'Fix leaks, damaged shingles, flashing issues — fast turnaround guaranteed.',
+    sv3:'Waterproofing',sv3d:'Advanced membranes and coatings to permanently protect your property.',
+    sv4:'Inspections',sv4d:'Detailed reports with photos, recommendations and priority assessment.',
+    'testi-tag':'Client Reviews','testi-title':'WHAT CLIENTS SAY',
+    t1:'"The quote calculator was spot-on. Fast crew and zero surprise charges at the end."',
+    t2:'"Full roof replacement in 2 days. Clean work site and perfect shingle match."',
+    t3:'"Most transparent contractor I\'ve worked with. Online estimate was very close to the final price."',
+    'contact-tag':'Get In Touch','contact-title':'CONTACT US','contact-sub':'Ready to get started? Send us a message or call directly.',
+    ci1l:'Phone',ci2l:'Email',ci3l:'Coverage Area',ci4l:'Hours',
+    cf1:'Your Name',cf2:'Your Phone',cf3:'Message',
+    'cf-email-btn':'✉️ Send Email','cf-wa-btn':'📱 WhatsApp',
+    nl1:'Calculator',nl2:'Pricing',nl3:'Services',nl4:'Contact'}},
+  es:{bkr:['Mano de Obra','Materiales','Servicios Extra','TOTAL'],
+    ids:{disc:'⚠️ Proyecto de aprendizaje/portafolio — no es un negocio real. Los precios son de demostración.',
+    'hero-tag':'Calculadora de Presupuesto','hero-h1':'OBTÉN TU<br/><span>COTIZACIÓN</span><br/>EN MINUTOS',
+    'hero-p':'Responde unas preguntas rápidas, ve los precios en tiempo real y obtén un estimado detallado al instante.',
+    'hero-cta':'Obtener Estimado','hero-cta2':'Ver Precios',
+    hc1:'Techos Completados',hc2:'Satisfacción',hc3:'Experiencia',
+    'calc-tag':'Estimado Gratis','calc-title':'CALCULADORA DE COTIZACIÓN','calc-sub':'Los precios se actualizan en vivo mientras llenas cada sección',
+    'pb-label':'Estimado en Vivo','pb-note':'Se actualiza al seleccionar','lp-tag1':'Básico','lp-tag2':'Premium',
+    q1l:'1. ¿Qué tipo de techo tienes?',q1h:'Toca para seleccionar — afecta el factor de complejidad',
+    rt1:'A dos aguas',rt2:'A cuatro aguas',rt3:'Plano',rt4:'Simple',
+    q2l:'2. ¿Cuál es el tamaño de tu techo?',q2h:'Arrastra el control — el precio se actualiza al instante','sqft-unit':'m²',
+    q3l:'3. ¿En qué condición está tu techo?',q3h:'Esto determina cuánta mano de obra se necesita',
+    c1:'Bueno',c2:'Regular',c3:'Malo',
+    q4l:'4. Servicios adicionales (opcional)',q4h:'Selecciona todos los que apliquen — se suman al total al instante',
+    a1:'Instalación de canaletas',a2:'Mejora de aislamiento',a3:'Instalación de tragaluces',a4:'Sistema de ventilación',a5:'Garantía extendida',a6:'Informe de inspección',
+    q5l:'5. Tu información de contacto',q5h:'Para enviarte la cotización detallada',
+    fl1:'Nombre completo',fl2:'Teléfono / WhatsApp',fl3:'Dirección de la propiedad',fl4:'Correo electrónico',fl5:'Notas adicionales',
+    'get-btn':'🔥 Ver Mi Cotización Completa','res-tag':'Tu Estimado Está Listo',
+    'res-note':'Rango estimado. Precio final confirmado tras inspección en sitio.',
+    'bk-h1':'Concepto','bk-h2':'Básico','bk-h3':'Premium',
+    'email-btn':'✉️ Enviar por Correo','wa-btn':'📱 Enviar por WhatsApp','reset-btn':'↩ Empezar de Nuevo',
+    'price-tag':'Precios Transparentes','price-title':'TARIFAS FIJAS','price-sub':'Sin sorpresas. Tarifas estándar antes de tu cotización personalizada.',
+    pc1n:'Inspección de Techo',pc1d:'Inspección completa con informe escrito y documentación fotográfica.',pc1note:'Se aplica al proyecto si contratan',
+    pc1f1:'Informe completo',pc1f2:'Documentación fotográfica',pc1f3:'Recomendaciones de reparación',pc1f4:'Agenda en la misma semana',
+    pc2n:'Reparaciones Menores',pc2d:'Goteras, tejas dañadas, flashing y problemas estructurales menores.',pc2note:'Por visita · Materiales incluidos',
+    pc2f1:'Parche de goteras',pc2f2:'Reemplazo de tejas',pc2f3:'Reparación de flashing',pc2f4:'Garantía de 90 días',
+    pc3n:'Reemplazo Parcial',pc3d:'Reemplazar una sección con materiales que combinen. Ideal para daños por tormenta.',pc3note:'Depende del área',
+    pc3f1:'Combinación de materiales',pc3f2:'Underlayment incluido',pc3f3:'Apoyo con seguros',pc3f4:'Garantía de 2 años',
+    'svc-tag':'Lo Que Hacemos','svc-title':'NUESTROS SERVICIOS DE TECHOS','svc-sub':'Soluciones profesionales para propiedades en Texas',
+    sv1:'Reemplazo Total',sv1d:'Desmontaje completo e instalación con materiales premium y garantía total.',
+    sv2:'Reparaciones',sv2d:'Goteras, tejas dañadas, flashing — respuesta rápida garantizada.',
+    sv3:'Impermeabilización',sv3d:'Membranas avanzadas para proteger permanentemente tu propiedad.',
+    sv4:'Inspecciones',sv4d:'Informes detallados con fotos, recomendaciones y evaluación de prioridades.',
+    'testi-tag':'Reseñas de Clientes','testi-title':'LO QUE DICEN LOS CLIENTES',
+    t1:'"La calculadora fue muy precisa. Equipo rápido y sin cobros sorpresa al final."',
+    t2:'"Reemplazaron todo el techo en 2 días. Trabajo limpio y tejas perfectamente combinadas."',
+    t3:'"El contratista más transparente con el que he trabajado. El estimado fue muy cercano al precio final."',
+    'contact-tag':'Contáctanos','contact-title':'CONTACTO','contact-sub':'¿Listo para empezar? Envíanos un mensaje o llama directamente.',
+    ci1l:'Teléfono',ci2l:'Correo',ci3l:'Área de cobertura',ci4l:'Horario',
+    cf1:'Tu nombre',cf2:'Tu teléfono',cf3:'Mensaje',
+    'cf-email-btn':'✉️ Enviar Correo','cf-wa-btn':'📱 WhatsApp',
+    nl1:'Calculadora',nl2:'Precios',nl3:'Servicios',nl4:'Contacto'}}
+};
+function setLang(l){
+  lang=l;
+  document.getElementById('btn-en').classList.toggle('on',l==='en');
+  document.getElementById('btn-es').classList.toggle('on',l==='es');
+  const ids=T[l].ids;
+  Object.entries(ids).forEach(([id,val])=>{const el=document.getElementById(id);if(el)el.innerHTML=val;});
+  document.getElementById('disc-text').textContent=ids['disc'];
+}
+upd();
+</script>
+</body>
+</html>
